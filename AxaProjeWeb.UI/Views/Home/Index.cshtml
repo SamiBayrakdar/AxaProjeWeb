@@ -1,0 +1,85 @@
+﻿@model List<AxaProjeWeb.UI.Models.CustomerListModel>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Müşteri Listesi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>Müşteriler</h2>
+        <a href="@Url.Action("CustomerNew","Home")">Yeni Müşteri</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Müşteri No</th>
+                    <th>Kategori ismi</th>
+                    <th>İsim</th>
+                    <th>Adres</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td> @item.Id</td>
+                        <td> @item.CategoriesName</td>
+                        <td> @item.FullName</td>
+                        <td> @item.Adress</td>
+                        <td>
+
+                            <button class="btn btn-outline-danger" data-customerid="@item.Id" onclick="CustomerDelete(this)">Delete</button>
+                            <a href="@Url.Action("CustomerEdit","Home",new { id = @item.Id })" class="btn btn-outline-dribbble">Edit</a>
+                        </td>
+                    </tr>
+
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function CustomerDelete(element) {
+            var id = $(element).data('customerid');
+            
+                $.ajax({
+                    url: '@Url.Action("DeleteCustomer","Home")' + '?id=' + id,
+                    type: 'get',
+                    dataType: 'json',
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (result) {
+                        if (result == "200") {
+                            alert("Müşteri Silindi");
+                            location.reload();
+                        } else {
+                            alert("Silinirken Hata Oluştu");
+                            location.reload();
+                        }
+                       
+
+                    },
+                    error: function (err) {
+                        console.log(err.statusText);
+                    }
+                });
+
+
+        }
+
+    </script>
+</body>
+</html>
+
+
+

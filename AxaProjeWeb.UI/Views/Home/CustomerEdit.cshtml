@@ -1,0 +1,23 @@
+﻿
+@model AxaProjeWeb.UI.Models.CustomEditModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Düzenle</h1>
+<form asp-action="CustomerEdit" method="post">
+
+    <input type="hidden" name="Id" value="@Model.Id" /><br />
+    <label>FullName</label><br>
+    <input type="text" placeholder="FullName" name="FullName" value="@Model.FullName" /><br />
+    <label>Adress</label><br>
+    <input type="text" placeholder="Adress" name="Adress" value="@Model.Adress" /><br />
+    <label>Müşteri Kategorisi:</label>
+    <select name="CategoriesId" id="CategoriesId">
+        <option value="@Model.CategoriesId" selected>@Model.CategoriesName</option>
+        <option value="1">Üye</option>
+        <option value="2">Misafir</option>
+
+
+    </select><br />
+    <button type="submit">kaydet</button>
+
+</form>
